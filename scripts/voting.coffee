@@ -21,22 +21,22 @@ module.exports = (robot) ->
     return res.message.user.name.toLowerCase()
 
 
-  robot.hear /start ?vote ?(.*)/i, (res) ->
+  robot.respond /startvote ?(.*)/i, (res) ->
     title = res.match[1]
     currentPoll = new Poll({
       title: title
     })
     user = getUser(res)
-    reply = "#{user} started a vote. vote with /placevote {{ your vote }}"
+    reply = "#{user} started a vote. vote with “vote {{ your vote }}”"
     res.send reply
 
-  robot.hear /place ?vote (.*)/i, (res) ->
+  robot.respond /vote (.*)/i, (res) ->
     if currentPoll
       currentPoll.vote getUser(res), res.match[1]
     else
       res.send "No poll currently"
 
-  robot.hear /show ?vote/i, (res) ->
+  robot.respond /showvote/i, (res) ->
     if currentPoll
       reply =  "#{currentPoll.title}\n"
       reply += "Current votes:\n"
